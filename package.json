@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/Tphohlela/notes-app#readme",
   "dependencies": {
+    "alpinejs": "^3.14.8",
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "vite": "^6.1.1"
   }
 }
