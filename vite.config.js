@@ -1,8 +1,14 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: 'public', // Change to where your index.html is located
+  root: 'public', // Keep this if your index.html is inside /public
+  base: './', // Ensure relative paths work
   build: {
     outDir: '../dist', // Output directory for the build
+    emptyOutDir: true,
+  },
+  server: {
+    open: true,
   },
 });
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes App</title>
+    <script type="module" crossorigin src="./assets/index-2kKY38CE.js"></script>
+  </head>
+  <body>
+    <div x-data="notes">
+      <button @click="increment">Increase</button>
+      <p>Count: <span x-text="count"></span></p>
+
+      <div class="container">
+        <h1>Notes App</h1>   
+        <div class="input-section">
+          <!-- <input type="text" class="form-control" x-model="signIn.username"/> -->
+          <input type="text" id="noteInput" placeholder="Write a note..." x-model="taskInput"/>
+          <button @click="addNote">Add</button>
+        </div>
+        <!-- <ul id="notesList"></ul> -->
+        <ul x-show="taskSection" x-text="displaytext"></ul>
+      </div>
+
+    </div>
+
+    <!-- <script type="module" src="src/main.js"></script> -->
+    
+  </body>
+</html>
