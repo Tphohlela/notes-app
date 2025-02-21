@@ -1,0 +1,11 @@
+version: 1
+services:
+  - type: web
+    name: notes-app
+    env: node
+    buildCommand: yarn install && yarn build
+    startCommand: node server.js
+    autoDeploy: true
+    plan: free
+    envVars:
+      NODE_ENV: production
