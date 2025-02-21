@@ -5,6 +5,7 @@ services:
     env: node
     buildCommand: |
       cd client && yarn install && yarn build
+      cd ../server && yarn install
     startCommand: |
       cd server && node index.js
     autoDeploy: true
