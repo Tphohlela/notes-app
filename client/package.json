@@ -1,0 +1,29 @@
+{
+  "name": "notes-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",                
+    "build": "vite build",        
+    "serve": "vite preview"      
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tphohlela/notes-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tphohlela/notes-app/issues"
+  },
+  "homepage": "https://github.com/Tphohlela/notes-app#readme",
+  "dependencies": {
+    "alpinejs": "^3.14.8",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "vite": "^6.1.1"
+  }
+}
