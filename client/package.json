@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",                
-    "build": "vite build",        
-    "serve": "vite preview"      
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Tphohlela/notes-app#readme",
   "dependencies": {
     "alpinejs": "^3.14.8",
+    "axios": "^1.7.9",
     "express": "^4.21.2"
   },
   "devDependencies": {

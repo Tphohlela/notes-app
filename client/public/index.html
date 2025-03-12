@@ -1,27 +1,179 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notes App</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notes App</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
 </head>
 <body>
-    <div x-data="notes">
-        <button @click="increment">Increase</button>
-        <p>Count: <span x-text="count"></span></p>
-        <div class="container">
-            <h1>Notes App</h1>
-            <div class="input-section">
-                <input type="text" id="noteInput" placeholder="Write a note..." x-model="taskInput"/>
-                <button @click="addNote">Add</button>
-            </div>
-            <ul x-show="taskSection" x-text="displaytext"></ul>
+  <div x-data="notes" class="container mt-5">
+    <!-- Header Section -->
+    <div x-show="homeSection" 
+    class="home-section fixed-top
+     row align-items-center mb-4" x-init="displayNotes">
+        <div class="col-md-8 col-6 d-flex align-items-center">
+          <button @click="goToHomePage" class="btn btn-secondary btn-sm me-5" style="margin-right: 10px;"
+          >←</button>
+          <h1 class="me-4 mb-1" style="font-size:2rem"> QuickNotes</h1>
         </div>
+        <div class="col-md-4 col-6 d-flex justify-content-end">
+          <img
+            src="./src/avatar.png"
+            class="rounded-circle"
+            width="60"
+            height="60"
+            alt="Avatar"
+          />
+        </div>
+      </div>
+      
+      
+      
+
+    <div class="search-bar-section container mt-5" x-show="searchBarSection">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group search-bar">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">
+                <i class="fas fa-search"></i>
+                <!-- Search icon -->
+              </span>
+            </div>
+            <input
+              class="form-control"
+              type="search"
+              placeholder="Search Notes..."
+              aria-label="Search"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="clearSearch"
+              >
+                &times;
+                <!-- "X" symbol -->
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- Update this line to point to the built JavaScript file -->
-    <!-- <script type="module" src="../dist/assets/index-D4ZlWDes.js"></script> -->
-    <script type="module" src="/src/main.js"></script>
+
+   
+
+    <!-- Add Note Section -->
+    <div x-show="addNoteSection">
+      <div class="input-section mb-4">
+        <div class="form-group">
+          <input
+            type="text"
+            placeholder="Title"
+            x-model="newNote.title"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <textarea
+            placeholder="Content"
+            x-model="newNote.content"
+            class="form-control"
+            rows="4"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="categorySelect">Category</label>
+          <div class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="categoryDropdown"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Select Category
+            </button>
+            <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+              <a
+                class="dropdown-item"
+                href="#"
+                @click.prevent="newNote.category = 'Work'"
+                >Work</a
+              >
+              <a
+                class="dropdown-item"
+                href="#"
+                @click.prevent="newNote.category = 'Personal'"
+                >Personal</a
+              >
+              <a
+                class="dropdown-item"
+                href="#"
+                @click.prevent="newNote.category = 'Shopping'"
+                >Shopping</a
+              >
+              <a
+                class="dropdown-item"
+                href="#"
+                @click.prevent="newNote.category = 'Other'"
+                >Other</a
+              >
+            </div>
+          </div>
+        </div>
+        <button @click="addNote" class="btn btn-primary">Add Note</button>
+      </div>
+    </div>
+
+    <div x-show="notesDisplaySection" class="notes-container mb-4">
+        <template x-for="note in notes" :key="note.id">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title" x-text="note.title"></h5>
+              <p class="card-text" x-text="note.content"></p>
+              <small class="text-muted">
+                Category: <span x-text="note.category"></span>
+              </small>
+            </div>
+          </div>
+        </template>
+      </div>
+
+    <!-- Footer Section -->
+    <div class="footer" x-show="footSection">
+      <button
+        class="btn btn-success rounded-circle add-note-button"
+        @click="goToAddPage"
+      >
+        <span class="h2">+</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Script files -->
+  <script type="module" src="/src/main.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"
+  ></script>
 </body>
-</html>
-
-
