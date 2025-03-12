@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview",
-    "start": "cd server && npm install && npm start"
+    "serve": "vite preview"
   },
   "repository": {
     "type": "git",
