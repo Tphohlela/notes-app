@@ -1,4 +1,5 @@
 import axiosInstance from "./axiosInstance";
+console.log('Checking:', axiosInstance);
 
 export default function notesApp() {
   return {
