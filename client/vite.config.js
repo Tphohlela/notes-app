@@ -15,6 +15,7 @@ export default defineConfig({
     port: process.env.PORT || 3000,
     allowedHosts: ['notes-app-ya4x.onrender.com'], // Allow Render's host
   },
+  
 });
 
 
