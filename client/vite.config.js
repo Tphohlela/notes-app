@@ -7,8 +7,12 @@ export default defineConfig({
     outDir: '../dist', // Output directory for the build
     emptyOutDir: true,
   },
+  // server: {
+  //   open: true,
+  // },
   server: {
-    open: true,
+    host: '0.0.0.0',
+    port: process.env.PORT || 3000,
   },
 });
 
