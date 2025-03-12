@@ -22,6 +22,9 @@ const config = {
     connectionString: DATABASE_URL,
 };
 
+console.log('Database URL:', process.env.DATABASE_URL);
+
+
 if (process.env.NODE_ENV === 'production') {
     config.ssl = {
         rejectUnauthorized: false,
