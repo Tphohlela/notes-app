@@ -3,7 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv'); 
 const PgPromise = require('pg-promise');
-require('dotenv').config();
+// require('dotenv').config();
 
 const app = express();
 
@@ -23,6 +23,8 @@ const config = {
 };
 
 console.log('Database URL:', process.env.DATABASE_URL);
+console.log("All ENV Variables in Render:", JSON.stringify(process.env, null, 2));
+
 
 
 if (process.env.NODE_ENV === 'production') {
