@@ -22,7 +22,7 @@ const config = {
     connectionString: DATABASE_URL,
 };
 
-console.log('Database URL:', process.env.DATABASE_URL);
+console.log('Database URL:', JSON.stringify(config));
 // console.log("All ENV Variables in Render:", JSON.stringify(process.env, null, 2));
 
 
