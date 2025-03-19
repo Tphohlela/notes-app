@@ -23,7 +23,7 @@ const config = {
 };
 
 console.log('Database URL:', process.env.DATABASE_URL);
-console.log("All ENV Variables in Render:", JSON.stringify(process.env, null, 2));
+// console.log("All ENV Variables in Render:", JSON.stringify(process.env, null, 2));
 
 
 
