@@ -22,7 +22,3 @@ jobs:
           target: 'https://notes-app-ya4x.onrender.com'  # Your app's URL
           cmd_options: '-config api.disablekey=true'  # Disable API key as you're not using one
 
-      - name: Debugging: Check if report is generated
-        run: |
-          ls -l  # List files to check if the report was generated
-
