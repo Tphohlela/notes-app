@@ -20,4 +20,5 @@ jobs:
         uses: zaproxy/action-full-scan@v0.1.0
         with:
           target: 'https://notes-app-ya4x.onrender.com'  # Your app's URL
-          cmd_options: '-config api.disablekey=true'  # Disable API key if not using one
+          cmd_options: '-config api.disablekey=true'  # Disable API key as you're not using one
+          docker_image: 'owasp/zap2docker-stable:2.10.0'  # Use a specific version
