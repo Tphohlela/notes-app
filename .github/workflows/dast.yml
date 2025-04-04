@@ -1,0 +1,25 @@
+name: DAST Scan with OWASP ZAP
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  dast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Pull ZAP Docker image
+        run: |
+          docker pull owasp/zap2docker-stable:2.10.0
+
+      - name: Run ZAP DAST Scan
+        run: |
+          docker run --user root -v $GITHUB_WORKSPACE:/zap/wrk/:rw --network=host -t owasp/zap2docker-stable:2.10.0 zap-full-scan.py -t https://notes-app-ya4x.onrender.com -J report_json.json -w report_md.md -r report_html.html -config api.disablekey=true
