@@ -16,10 +16,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Pull ZAP Docker image
-        run: |
-          docker pull owasp/zap2docker-stable:2.10.0
-
-      - name: Run ZAP DAST Scan
-        run: |
-          docker run --user root -v $GITHUB_WORKSPACE:/zap/wrk/:rw --network=host -t owasp/zap2docker-stable:2.10.0 zap-full-scan.py -t https://notes-app-ya4x.onrender.com -J report_json.json -w report_md.md -r report_html.html -config api.disablekey=true
+      - name: Set up ZAP DAST scanner
+        uses: zaproxy/action-full-scan@v0.1.0
+        with:
+          target: 'https://notes-app-ya4x.onrender.com'  # Your app's URL
+          cmd_options: '-config api.disablekey=true'  # Disable API key if not using one
