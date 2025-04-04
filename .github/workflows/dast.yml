@@ -21,4 +21,4 @@ jobs:
         with:
           target: 'https://notes-app-ya4x.onrender.com'  # Your app's URL
           cmd_options: '-config api.disablekey=true'  # Disable API key as you're not using one
-          docker_image: 'owasp/zap2docker-stable:2.10.0'  # Use a specific version
+          docker_name: 'owasp/zap2docker-stable:2.10.0'  # Use a specific version of the Docker image
