@@ -10,10 +10,17 @@ jobs:
   zap_scan:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2  # Ensure you check out your code
+
       - name: ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.11.0
         with:
           target: 'https://notes-app-ya4x.onrender.com'
           token: ${{ secrets.GITHUB_TOKEN }}
           fail_action: false
-          cmd_options: '-w report.md -x report.xml -r report.html'
+          cmd_options: '-w /zap/wrk/report.md -x /zap/wrk/report.xml -r /zap/wrk/report.html'  # Path adjustment for reports
+
+      # Optional: Add step to list files and verify reports after scan
+      - name: List report files
+        run: ls -l /zap/wrk  # Check if the reports were generated
