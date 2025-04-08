@@ -1,6 +1,19 @@
-  name: ZAP Baseline Scan
-  uses: zaproxy/action-baseline@v0.11.0
-  with:
-    target: 'https://notes-app-ya4x.onrender.com'
-    token: ${{ secrets.GITHUB_TOKEN }}
-    fail_action: false
+name: DAST Scan with ZAP
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:  # Allows you to trigger it manually from the Actions tab
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.11.0
+        with:
+          target: 'https://notes-app-ya4x.onrender.com'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fail_action: false
+          cmd_options: '-w report.md -x report.xml -r report.html'
