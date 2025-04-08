@@ -1,49 +1,6 @@
-name: DAST Scan with ZAP
-
-on:
-  push:
-    branches:
-      - master
-  workflow_dispatch:  # Allows you to trigger it manually from the Actions tab
-
-jobs:
-  zap_scan:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2  # Ensure you check out your code
-
-      - name: Create reports directory
-        run: mkdir -p $GITHUB_WORKSPACE/reports  # Create a directory for reports inside the workspace
-
-      - name: ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.11.0
-        with:
-          target: 'https://notes-app-ya4x.onrender.com'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fail_action: false
-          cmd_options: '-w /zap/wrk/reports/report.md -x /zap/wrk/reports/report.xml -r /zap/wrk/reports/report.html'  # Save reports inside the container
-
-      - name: Fix permissions for /zap/wrk
-        run: |
-          sudo chmod -R 777 /zap/wrk  # Allow full permissions for the /zap/wrk directory
-
-      - name: List files in /zap/wrk/reports to verify reports are generated
-        run: ls -l /zap/wrk/reports  # Check if the reports are generated inside the container
-
-      - name: Copy reports to workspace
-        run: |
-          # Check if files exist before copying
-          if [ -f /zap/wrk/reports/*.md ]; then
-            cp /zap/wrk/reports/*.md $GITHUB_WORKSPACE/reports/
-          fi
-          if [ -f /zap/wrk/reports/*.xml ]; then
-            cp /zap/wrk/reports/*.xml $GITHUB_WORKSPACE/reports/
-          fi
-          if [ -f /zap/wrk/reports/*.html ]; then
-            cp /zap/wrk/reports/*.html $GITHUB_WORKSPACE/reports/
-          fi
-
-      # Optional: Add step to list files and verify reports after scan
-      - name: List report files in workspace
-        run: ls -l $GITHUB_WORKSPACE/reports  # Check if the reports were copied
+- name: ZAP Baseline Scan
+  uses: zaproxy/action-baseline@v0.11.0
+  with:
+    target: 'https://notes-app-ya4x.onrender.com'
+    token: ${{ secrets.GITHUB_TOKEN }}
+    fail_action: false
