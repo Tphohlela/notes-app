@@ -22,7 +22,13 @@ jobs:
           target: 'https://notes-app-ya4x.onrender.com'
           token: ${{ secrets.GITHUB_TOKEN }}
           fail_action: false
-          cmd_options: '-w $GITHUB_WORKSPACE/reports/report.md -x $GITHUB_WORKSPACE/reports/report.xml -r $GITHUB_WORKSPACE/reports/report.html'  # Save reports inside workspace
+          cmd_options: '-w /zap/wrk/reports/report.md -x /zap/wrk/reports/report.xml -r /zap/wrk/reports/report.html'  # Save reports inside the container
+
+      - name: Copy reports to workspace
+        run: |
+          cp /zap/wrk/reports/*.md $GITHUB_WORKSPACE/reports/
+          cp /zap/wrk/reports/*.xml $GITHUB_WORKSPACE/reports/
+          cp /zap/wrk/reports/*.html $GITHUB_WORKSPACE/reports/
 
       # Optional: Add step to list files and verify reports after scan
       - name: List report files
