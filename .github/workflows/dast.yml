@@ -24,12 +24,22 @@ jobs:
           fail_action: false
           cmd_options: '-w /zap/wrk/reports/report.md -x /zap/wrk/reports/report.xml -r /zap/wrk/reports/report.html'  # Save reports inside the container
 
+      - name: List files in /zap/wrk/reports to verify reports are generated
+        run: ls -l /zap/wrk/reports  # Check if the reports are generated inside the container
+
       - name: Copy reports to workspace
         run: |
-          cp /zap/wrk/reports/*.md $GITHUB_WORKSPACE/reports/
-          cp /zap/wrk/reports/*.xml $GITHUB_WORKSPACE/reports/
-          cp /zap/wrk/reports/*.html $GITHUB_WORKSPACE/reports/
+          # Check if files exist before copying
+          if [ -f /zap/wrk/reports/*.md ]; then
+            cp /zap/wrk/reports/*.md $GITHUB_WORKSPACE/reports/
+          fi
+          if [ -f /zap/wrk/reports/*.xml ]; then
+            cp /zap/wrk/reports/*.xml $GITHUB_WORKSPACE/reports/
+          fi
+          if [ -f /zap/wrk/reports/*.html ]; then
+            cp /zap/wrk/reports/*.html $GITHUB_WORKSPACE/reports/
+          fi
 
       # Optional: Add step to list files and verify reports after scan
-      - name: List report files
-        run: ls -l $GITHUB_WORKSPACE/reports  # Check if the reports were generated
+      - name: List report files in workspace
+        run: ls -l $GITHUB_WORKSPACE/reports  # Check if the reports were copied
