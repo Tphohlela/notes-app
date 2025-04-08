@@ -24,6 +24,10 @@ jobs:
           fail_action: false
           cmd_options: '-w /zap/wrk/reports/report.md -x /zap/wrk/reports/report.xml -r /zap/wrk/reports/report.html'  # Save reports inside the container
 
+      - name: Fix permissions for /zap/wrk
+        run: |
+          sudo chmod -R 777 /zap/wrk  # Allow full permissions for the /zap/wrk directory
+
       - name: List files in /zap/wrk/reports to verify reports are generated
         run: ls -l /zap/wrk/reports  # Check if the reports are generated inside the container
 
