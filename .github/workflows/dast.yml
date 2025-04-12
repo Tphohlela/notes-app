@@ -1,37 +1,29 @@
-name: ZAP Baseline Scan
+name: OWASP ZAP Scan
 
 on:
   push:
     branches:
-      - master
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  zap-scan:
+  owasp-zap:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Set up Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
-          sudo systemctl start docker
-          sudo systemctl enable docker
-
-      - name: Run ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.6.1
+      - name: Set up ZAP Scan
+        uses: zaproxy/action-full-scan@v0.6.0
         with:
-          target: 'https://notes-app-ya4x.onrender.com'
-          docker_image: 'ghcr.io/zaproxy/zaproxy:latest'
-          options: '-J report_json.json -w report_md.md -r report_html.html -a'
+          target: 'https://notes-app-ya4x.onrender.com/'
+          zap_options: '-config api.disablekey=true'
 
-      - name: Upload ZAP Report Artifact
+      - name: Upload ZAP Report
         uses: actions/upload-artifact@v2
         with:
           name: zap-report
-          path: |
-            report_json.json
-            report_md.md
-            report_html.html
+          path: zap-report.html
