@@ -1,51 +1,19 @@
-name: ZAP DAST Scan
+name: DAST scan with OWASP ZAP
 
 on:
-  push:  # Or use `schedule` or `workflow_dispatch` if preferred
+  push:
 
 jobs:
   zap_scan:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout repository
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: 🐳 Run ZAP Baseline Scan in Docker (Hardcoded URL)
-        run: |
-          mkdir -p zap-reports
-          docker run \
-            --rm \
-            -v ${{ github.workspace }}/zap-reports:/zap/wrk/:rw \
-            ghcr.io/zaproxy/zaproxy:stable \
-            zap-baseline.py \
-            -t https://notes-app-ya4x.onrender.com \
-            -x /zap/wrk/report.xml \
-            -r /zap/wrk/report.html \
-            -J /zap/wrk/report.json \
-            -w /zap/wrk/report.md \
-            -I || true
-
-      - name: 📩 Upload HTML Report
-        uses: actions/upload-artifact@v4
+      - name: ⚡ ZAP Baseline Scan (Easier Setup)
+        uses: zaproxy/action-baseline@v0.6.1
         with:
-          name: ZAP_HTML_Report
-          path: zap-reports/report.html
-
-      - name: 📩 Upload JSON Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: ZAP_JSON_Report
-          path: zap-reports/report.json
-
-      - name: 📩 Upload Markdown Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: ZAP_MD_Report
-          path: zap-reports/report.md
-
-      - name: 📩 Upload XML Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: ZAP_XML_Report
-          path: zap-reports/report.xml
+          target: 'https://notes-app-ya4x.onrender.com'
+          docker_name: 'owasp/zap2docker-stable'
+          cmd_options: '-a'
