@@ -3,26 +3,35 @@ name: ZAP Baseline Scan
 on:
   push:
     branches:
-      - master  # Trigger on push to the master branch
+      - master
 
 jobs:
-  scan:
+  zap-scan:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Download ZAP Baseline action
-      uses: zaproxy/action-baseline@v0.6.1
-      with:
-        target: 'https://notes-app-ya4x.onrender.com'  # Your render URL
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          sudo systemctl start docker
+          sudo systemctl enable docker
 
-    - name: Upload ZAP report
-      uses: actions/upload-artifact@v3
-      with:
-        name: zap-report
-        path: |
-          report_json.json
-          report_md.md
-          report_html.html
+      - name: Run ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.6.1
+        with:
+          target: 'https://notes-app-ya4x.onrender.com'
+          docker_image: 'ghcr.io/zaproxy/zaproxy:latest'
+          options: '-J report_json.json -w report_md.md -r report_html.html -a'
+
+      - name: Upload ZAP Report Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap-report
+          path: |
+            report_json.json
+            report_md.md
+            report_html.html
