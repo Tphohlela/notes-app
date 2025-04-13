@@ -3,18 +3,33 @@ name: ZAP Baseline Scan
 on:
   push:
     branches:
-      - master  
+      - master
 
 jobs:
-  owasp-zap:
+  zap_scan:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Run ZAP Baseline Scan
+      - name: ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.14.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          target: 'https://notes-app-ya4x.onrender.com/'
+          target: https://notes-app-ya4x.onrender.com/
+          token: ${{ secrets.MY_GITHUB_TOKEN}}
+          report_html: report_html.html
+          report_json: report_json.json
+          report_md: report_md.md
+          # Optional: If you want to define how to handle certain alerts (ignore/warn/fail)
+          # rules_file_name: '.zap/rules.tsv'
+          # cmd_options: '-a'
+
+      - name: Upload ZAP reports as artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap-reports
+          path: |
+            report_json.json
+            report_md.md
+            report_html.html
