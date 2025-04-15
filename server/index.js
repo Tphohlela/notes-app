@@ -26,7 +26,7 @@ console.log('Database URL:', JSON.stringify(config));
 // console.log("All ENV Variables in Render:", JSON.stringify(process.env, null, 2));
 
 //testing gitleaks
-const API_KEY="test-api-key-12345"
+const API_KEY="test-api-key-123456"
 
 
 if (process.env.NODE_ENV === 'production') {
