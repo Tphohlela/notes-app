@@ -1,4 +1,4 @@
-name: gitleaks
+name: Secrets scan with gitleaks
 
 on:
   pull_request:
