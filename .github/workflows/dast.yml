@@ -1,4 +1,4 @@
-name: ZAP Baseline Scan
+name: DAST scan with OWASP ZAP
 
 on:
   push:
@@ -21,10 +21,7 @@ jobs:
           report_html: report_html.html
           report_json: report_json.json
           report_md: report_md.md
-          # Optional: If you want to define how to handle certain alerts (ignore/warn/fail)
-          # rules_file_name: '.zap/rules.tsv'
-          # cmd_options: '-a'
-
+         
       - name: Upload ZAP reports as artifacts
         uses: actions/upload-artifact@v4
         with:
