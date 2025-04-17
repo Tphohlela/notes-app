@@ -52,16 +52,15 @@ app.post('/api/signUp', API.registerUser);
 app.post('/api/addNote', API.addNote);
 app.get('/api/getNotes',API.getNotes);
 
-
+app.get('/', requiresAuth(), (req, res) => {
+    res.send(JSON.stringify(req.oidc.user));
+  });
 // Serve your index.html from the dist folder
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
-app.get('/', requiresAuth(), (req, res) => {
-    res.send(`Hello ${req.oidc.user.name}, you are logged in!`);
-  });
-  
+
 
 // app.get('/', (req, res) => {
 //     res.send(
