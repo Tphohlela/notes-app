@@ -14,16 +14,17 @@ export default function notesApp() {
     async displayNotes() {
         console.log("display notes");
         console.log("axiosInstance:", axiosInstance); // Check if axiosInstance is defined
-    
+        
         try {
             const response = await axiosInstance.get('/api/getNotes');
             console.log("Response data:", response.data);
-            this.notes = response.data.data ?? [];
+            this.notes = response.data ?? []; // Make sure to check the correct structure
         } catch (error) {
             console.error("Error fetching notes:", error);
             alert("Failed to fetch notes. Please try again.");
         }
     },
+    
     
     async goToAddPage(){
         console.log('and then')

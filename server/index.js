@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv'); 
 const PgPromise = require('pg-promise');
+const { auth, requiresAuth } = require('express-openid-connect');
 // require('dotenv').config();
 
 const app = express();
@@ -16,27 +17,37 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 dotenv.config(); 
 
+
 // Database setup
 const DATABASE_URL = process.env.DATABASE_URL;
-const config = {
+const dbConfig = {
     connectionString: DATABASE_URL,
+  };
+const config = {
+    authRequired: false,
+  auth0Logout: true,
+  baseURL: 'http://localhost:3000',
+  clientID: 'tGBijhtIejc2DqQsVQrkLE2SmM7AYQBy',
+  issuerBaseURL: 'https://dev-u5gsx4bhfio6d05j.us.auth0.com',
+  secret: 'LONG_RANDOM_STRING'
+    
 };
 
-console.log('Database URL:', JSON.stringify(config));
-// console.log("All ENV Variables in Render:", JSON.stringify(process.env, null, 2));
+app.use(auth(config));
 
 //testing gitleaks
 const API_KEY="test-api-key-123456"
 
 
 if (process.env.NODE_ENV === 'production') {
-    config.ssl = {
+
+    dbConfig.ssl = {
         rejectUnauthorized: false,
     };
 }
 
 const pgp = PgPromise({});
-const db = pgp(config);
+const db = pgp(dbConfig)
 const API = require('./api.js')(db); // Import and initialize API with db instance
 
 // API routes
@@ -51,9 +62,18 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
+app.get('/', (req, res) => {
+    res.send(
+      req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out'
+    )
+  });
+
+  app.get('/profile', requiresAuth(), (req, res) => {
+    res.send(JSON.stringify(req.oidc.user, null, 2));
+  });
+
 // Start the server
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-

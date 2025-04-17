@@ -14,28 +14,34 @@
 </head>
 <body>
   <div x-data="notes" class="container mt-5">
+    <a href="/login">Login</a>
+
     <!-- Header Section -->
-    <div x-show="homeSection" 
-    class="home-section fixed-top
-     row align-items-center mb-4" x-init="displayNotes">
-        <div class="col-md-8 col-6 d-flex align-items-center">
-          <button @click="goToHomePage" class="btn btn-secondary btn-sm me-5" style="margin-right: 10px;"
-          >←</button>
-          <h1 class="me-4 mb-1" style="font-size:2rem"> QuickNotes</h1>
-        </div>
-        <div class="col-md-4 col-6 d-flex justify-content-end">
-          <img
-            src="./src/avatar.png"
-            class="rounded-circle"
-            width="60"
-            height="60"
-            alt="Avatar"
-          />
-        </div>
+    <div
+      x-show="homeSection"
+      class="home-section fixed-top row align-items-center mb-4"
+      x-init="displayNotes"
+    >
+      <div class="col-md-8 col-6 d-flex align-items-center">
+        <button
+          @click="goToHomePage"
+          class="btn btn-secondary btn-sm me-5"
+          style="margin-right: 10px"
+        >
+          ←
+        </button>
+        <h1 class="me-4 mb-1" style="font-size: 2rem">QuickNotes</h1>
       </div>
-      
-      
-      
+      <div class="col-md-4 col-6 d-flex justify-content-end">
+        <img
+          src="./src/avatar.png"
+          class="rounded-circle"
+          width="60"
+          height="60"
+          alt="Avatar"
+        />
+      </div>
+    </div>
 
     <div class="search-bar-section container mt-5" x-show="searchBarSection">
       <div class="row">
@@ -67,8 +73,6 @@
         </div>
       </div>
     </div>
-
-   
 
     <!-- Add Note Section -->
     <div x-show="addNoteSection">
@@ -135,18 +139,18 @@
     </div>
 
     <div x-show="notesDisplaySection" class="notes-container mb-4">
-        <template x-for="note in notes" :key="note.id">
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title" x-text="note.title"></h5>
-              <p class="card-text" x-text="note.content"></p>
-              <small class="text-muted">
-                Category: <span x-text="note.category"></span>
-              </small>
-            </div>
+      <template x-for="note in notes" :key="note.id">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title" x-text="note.title"></h5>
+            <p class="card-text" x-text="note.content"></p>
+            <small class="text-muted">
+              Category: <span x-text="note.category"></span>
+            </small>
           </div>
-        </template>
-      </div>
+        </div>
+      </template>
+    </div>
 
     <!-- Footer Section -->
     <div class="footer" x-show="footSection">
