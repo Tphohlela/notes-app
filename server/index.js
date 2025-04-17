@@ -26,7 +26,7 @@ const dbConfig = {
 const config = {
     authRequired: false,
   auth0Logout: true,
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://notes-app-ya4x.onrender.com',
   clientID: 'tGBijhtIejc2DqQsVQrkLE2SmM7AYQBy',
   issuerBaseURL: 'https://dev-u5gsx4bhfio6d05j.us.auth0.com',
   secret: 'LONG_RANDOM_STRING'
