@@ -35,10 +35,6 @@ const config = {
 
 app.use(auth(config));
 
-//testing gitleaks
-const API_KEY="test-api-key-123456"
-
-
 if (process.env.NODE_ENV === 'production') {
 
     dbConfig.ssl = {
@@ -62,11 +58,16 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
-app.get('/', (req, res) => {
-    res.send(
-      req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out'
-    )
+app.get('/', requiresAuth(), (req, res) => {
+    res.send(`Hello ${req.oidc.user.name}, you are logged in!`);
   });
+  
+
+// app.get('/', (req, res) => {
+//     res.send(
+//       req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out'
+//     )
+//   });
 
   app.get('/profile', requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user, null, 2));
