@@ -2,20 +2,20 @@ name: Snyk Security Scan
 
 on:
   push:
-    branches: [master]  # Keeps 'master' as the default branch
+    branches: [master]
   pull_request:
     branches: [master]
 
 jobs:
   snyk:
     runs-on: ubuntu-latest
-    timeout-minutes: 10  # Set timeout for 10 minutes
+    timeout-minutes: 10  
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Node.js (adjust if not using Node)
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -23,9 +23,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
       - name: Run Snyk test
-        uses: snyk/actions/node@v1
+        run: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: test
