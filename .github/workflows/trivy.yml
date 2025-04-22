@@ -1,8 +1,28 @@
-- name: Run Trivy vulnerability scanner
+name: Trivy Container Scan
 
-  uses: aquasecurity/trivy-action@master
-  with:
-    image-ref: myapp:latest
-    format: table
-    exit-code: 0
-    severity: CRITICAL,HIGH
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Pull pre-built Docker image
+        run: docker pull myapp:latest
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: myapp:latest
+          format: table
+          exit-code: 0
+          severity: CRITICAL,HIGH
