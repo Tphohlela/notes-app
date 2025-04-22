@@ -21,12 +21,12 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Pull Docker image from Docker Hub
-        run: docker pull yourusername/myapp:latest
+        run: docker pull tphohlela/myapp:latest
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: yourusername/myapp:latest
+          image-ref: tphohlela/myapp:latest
           format: table
           exit-code: 0
           severity: CRITICAL,HIGH
